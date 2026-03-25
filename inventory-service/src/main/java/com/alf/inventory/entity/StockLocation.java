@@ -16,11 +16,11 @@ public class StockLocation {
 
     private String location_type;
 
-    @Column(name="warehouse_id")
-    private Long warehouseId;
-
     @Column(name="company_id")
     private Long companyId;
+
+    @Column(name="warehouse_id")
+    private Long warehouseId;
 
     @Column(name="partner_id")
     private Long partnerId;
