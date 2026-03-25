@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- Create entity user authority -->
+    <changeSet id="00004" author="MohamedFouad" context="dev, prod">
+
+        <sql>
+            CREATE TABLE IF NOT EXISTS user_authority
+            (
+                user_id Integer NOT NULL,
+                authority_name character varying(50)  NOT NULL,
+                CONSTRAINT user_authority_pkey PRIMARY KEY (user_id, authority_name),
+                CONSTRAINT fk3fq2nbqpjj9ir69n5rh3bduqe FOREIGN KEY (user_id)
+                REFERENCES app_users (id) MATCH SIMPLE
+                ON UPDATE NO ACTION
+                ON DELETE NO ACTION,
+                CONSTRAINT fk6ktglpl5mjosa283rvken2py5 FOREIGN KEY (authority_name)
+                REFERENCES authority (name) MATCH SIMPLE
+                ON UPDATE NO ACTION
+                ON DELETE NO ACTION
+            );
+            INSERT INTO user_authority(
+            user_id, authority_name)
+            VALUES (1, 'ROLE_ADMIN');
+
+        </sql>
+    </changeSet>
+</databaseChangeLog>

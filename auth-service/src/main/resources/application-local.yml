@@ -1,0 +1,125 @@
+server:
+  port: 8081
+spring:
+
+  threads:
+    virtual:
+      enabled: true
+
+  main:
+    allow-bean-definition-overriding: true
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+  application:
+    name: auth-service
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      connect-timeout: 2000ms
+
+  cloud:
+    config:
+      enabled: false
+      import-check:
+        enabled: false
+
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5433/authdb
+    username: auth_user
+    password: auth_pass
+    driverClassName: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+  liquibase:
+    change-log: liquibase/db.changelog-master.xml
+    enabled: true
+    drop-first: false
+    default-schema: public
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+
+security:
+  jwt:
+    filter-exclude-urls:
+      - /authenticate
+      - /login
+      - /refresh
+      - /ping
+      - /jwks.json
+      - /user-info
+      - /display-name
+      - /user-register
+      - /verify-register
+      - /new-otp
+      - /verify-reset-password
+      - /forgot
+      - /update-password
+    jwks-ttl: 600
+    clock-skew-seconds: 604800
+    jwks-url: http://localhost:8081/jwks.json
+    redis-enabled: true
+    refresh-ttl-days: 30
+    access-ttl-seconds: 900
+    issuer: "auth-service"
+    private-key: keys/ecdsa-private.pem
+    public-key: keys/ecdsa-public.pem
+    access-token-minutes: 15
+    refresh-token-days: 30
+  keystore:
+    # AES key لتشفير الخاص — خزنه في secret manager (env/VM secret) مش هنا
+    # Production Use : ${ENCRYPTION_KEY}
+    encryption-password: "JH4f9bL2t4x8Raa8vV2tV6sKp8jJsdfS9Hkddf8sE3A="
+    retain-keys: 3 # عدد المفاتيح المحفوظة (current + previous...)
+    rotation-cron: 0 0 3 * * ? # مثال: كل يوم 3:00
+    redis-topic: jwt-keys-updated
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+email:
+  host: smtp.gmail.com
+  port: 587
+  username: ids.fouad@gmail.com
+  password: iglcovtvizhpyifz
+  debug: true
+
+
+logging:
+  level:
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    com.zaxxer.hikari: DEBUG

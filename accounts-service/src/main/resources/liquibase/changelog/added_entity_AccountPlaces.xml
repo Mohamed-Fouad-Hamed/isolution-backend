@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- Create entity user role -->
+    <changeSet id="0004" author="MohamedFouad" context="dev, prod">
+
+
+        <sql>
+            CREATE TABLE IF NOT EXISTS account_places
+            (
+                account_id BIGINT NOT NULL,
+                place_id Integer NOT NULL,
+                CONSTRAINT account_place_pkey PRIMARY KEY (account_id, place_id),
+                CONSTRAINT account_id_foreign_key FOREIGN KEY (account_id)
+                REFERENCES app_accounts (id) MATCH SIMPLE
+                ON UPDATE NO ACTION
+                ON DELETE NO ACTION,
+                CONSTRAINT place_id_foreign_key FOREIGN KEY (place_id)
+                REFERENCES app_places (id) MATCH SIMPLE
+                ON UPDATE NO ACTION
+                ON DELETE NO ACTION
+            );
+        </sql>
+
+
+    </changeSet>
+</databaseChangeLog>

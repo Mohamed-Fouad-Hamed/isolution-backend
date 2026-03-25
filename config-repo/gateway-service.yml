@@ -1,0 +1,119 @@
+
+server:
+  port: 8080
+
+spring:
+
+  threads:
+    virtual:
+      enabled: true
+
+  application:
+    name: gateway-service
+
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000ms
+      connect-timeout: 2000ms
+
+  cloud:
+
+    config:
+      uri: http://config-service:8888
+      fail-fast: false
+      retry:
+        max-attempts: 6
+        initial-interval: 2000
+
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            exposedHeaders:
+              - "Authorization"
+              - "X-Device-Id"
+            allowCredentials: true
+
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      routes:
+        - id: auth-service
+          uri: http://host.docker.internal:8081
+          predicates:
+            - Path=/api/v1/auth/**
+          filters:
+            - StripPrefix=3
+        - id: billing-service
+          uri: http://host.docker.internal:8082
+          predicates:
+            - Path=/api/v1/billing/**
+          filters:
+            - StripPrefix=3
+        - id: accounts-service
+          uri: http://host.docker.internal:8083
+          predicates:
+            - Path=/api/v1/accounts/**
+          filters:
+            - StripPrefix=3
+  redis:
+    host: ${REDIS_HOST:redis}
+    port: ${REDIS_PORT:6379}
+    timeout: 2000ms
+    connect-timeout: 2000ms
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://discovery-service:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+
+security:
+  jwt:
+    filter-exclude-urls:
+      - /api/v1/auth/authenticate
+      - /api/v1/auth/login
+      - /api/v1/auth/refresh
+      - /ping
+      - /jwks.json
+      - /api/v1/auth/user-info
+      - /api/v1/auth/display-name
+      - /api/v1/auth/user-register
+      - /api/v1/auth/verify-register
+      - /api/v1/auth/new-otp
+      - /api/v1/auth/verify-reset-password
+      - /api/v1/auth/forgot
+      - /api/v1/auth/update-password
+    jwks-ttl: 600
+    clock-skew-seconds: 604800
+    jwks-url: http://host.docker.internal:8081/jwks.json
+    redis-enabled: true
+    refresh-ttl-days: 30
+    access-ttl-seconds: 900
+    issuer: "gateway-service"
+    private-key: keys/ecdsa-private.pem
+    public-key: keys/ecdsa-public.pem
+    access-token-minutes: 15
+    refresh-token-days: 30
+
+logging:
+  level:
+    root: INFO
+    com.alf.gateway.filter: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+
+
+

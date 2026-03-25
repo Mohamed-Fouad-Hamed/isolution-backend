@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- Create entity user -->
+    <changeSet id="0000599" author="MohamedFouad" context="dev, prod">
+
+
+        <sql>
+
+            CREATE TABLE IF NOT EXISTS outbox_event
+            (
+                id varchar(50) NOT NULL ,
+                aggregate_id varchar(50) NOT NULL ,
+                type_event varchar(50) NOT NULL ,
+                payload TEXT not null,
+                sent boolean default false,
+                created_at timestamp(6) without time zone NOT NULL,
+                CONSTRAINT app_outbox_event_key PRIMARY KEY (id)
+            );
+
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

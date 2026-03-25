@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- Create entity sequence -->
+    <changeSet id="00012" author="MohamedFouad" context="dev, prod">
+
+        <sql>
+
+            CREATE TABLE IF NOT EXISTS id_sequence (
+                entity_name VARCHAR(100) PRIMARY KEY,
+                code_len VARCHAR(2) default '10',
+                last_number BIGINT NOT NULL
+            );
+
+            INSERT INTO id_sequence (entity_name, last_number) VALUES ('app_accounts', 1);
+            INSERT INTO id_sequence (entity_name, code_len, last_number) VALUES ('cost_center','5', 0);
+            INSERT INTO id_sequence (entity_name, code_len, last_number) VALUES ('department','7', 0);
+            INSERT INTO id_sequence (entity_name, code_len, last_number) VALUES ('fiscal_period','5', 0);
+            INSERT INTO id_sequence (entity_name, code_len, last_number) VALUES ('fiscal_year','5', 0);
+            INSERT INTO id_sequence (entity_name, code_len, last_number) VALUES ('financial_account','38', 0);
+            INSERT INTO id_sequence (entity_name, code_len,last_number) VALUES ('financial_account_type','5', 0);
+            INSERT INTO id_sequence (entity_name, code_len, last_number) VALUES ('currency','3', 11);
+            INSERT INTO id_sequence (entity_name, code_len, last_number) VALUES ('exchange_rate','9', 0);
+            INSERT INTO id_sequence (entity_name, last_number) VALUES ('journals', 0);
+            INSERT INTO id_sequence (entity_name, last_number) VALUES ('journal_entry', 0);
+            INSERT INTO id_sequence (entity_name, code_len, last_number) VALUES ('tax','5', 0);
+            INSERT INTO id_sequence (entity_name, code_len, last_number) VALUES ('tax_type','3', 0);
+            INSERT INTO id_sequence (entity_name, last_number) VALUES ('partner', 1);
+            INSERT INTO id_sequence (entity_name, last_number) VALUES ('bills', 0);
+            INSERT INTO id_sequence (entity_name, last_number) VALUES ('invoices', 0);
+            INSERT INTO id_sequence (entity_name, last_number) VALUES ('fin_payments', 0);
+
+
+
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

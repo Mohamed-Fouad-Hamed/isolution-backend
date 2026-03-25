@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- Create entity modules -->
+    <changeSet id="00015" author="MohamedFouad" context="dev, prod">
+
+
+        <sql>
+
+            CREATE TABLE sys_modules (
+                id INTEGER NOT NULL,
+                name VARCHAR NOT NULL,
+                key_translate VARCHAR NOT NULL,
+                u_path VARCHAR NOT NULL,
+                parent_id INTEGER,
+                CONSTRAINT app_modules_p_key PRIMARY KEY (id)
+            );
+
+            INSERT INTO sys_modules VALUES(1,'ISolution','main_root','/',NULL);
+            INSERT INTO sys_modules VALUES(2,'Accounting','module_accounting','/module-accounting',1);
+            INSERT INTO sys_modules VALUES(3,'Employees','module_employees','/module-employees',2);
+            INSERT INTO sys_modules VALUES(4,'Sales','module_sales','/module-sales',2);
+            INSERT INTO sys_modules VALUES(5,'Point of sale','module_point_of_sale','/module-point-of-sale',4);
+            INSERT INTO sys_modules VALUES(6,'Inventory','module_inventory','/module-inventory',2);
+            INSERT INTO sys_modules VALUES(7,'Purchase','module_purchase','/module-purchase',2);
+
+        </sql>
+
+
+    </changeSet>
+</databaseChangeLog>

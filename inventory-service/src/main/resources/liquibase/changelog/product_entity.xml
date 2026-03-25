@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+    <property name="now" value="sysdate" dbms="oracle"/>
+
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle"/>
+
+    <!-- Create entity product -->
+    <changeSet id="0003" author="MohamedFouad" context="dev, prod">
+
+        <sql>
+
+            CREATE TABLE product_template (
+
+            id BIGSERIAL PRIMARY KEY,
+
+            name VARCHAR(255) NOT NULL,
+
+            product_type VARCHAR(20) NOT NULL,
+            -- product / service / consumable
+
+            category_id BIGINT,
+
+            uom_id BIGINT NOT NULL,
+            purchase_uom_id BIGINT,
+
+            weight NUMERIC(12,3),
+            volume NUMERIC(12,3),
+
+            active BOOLEAN DEFAULT TRUE,
+
+            CONSTRAINT fk_product_category
+            FOREIGN KEY (category_id)
+            REFERENCES product_category(id),
+
+            CONSTRAINT fk_product_uom
+            FOREIGN KEY (uom_id)
+            REFERENCES uom(id),
+
+            CONSTRAINT fk_purchase_uom
+            FOREIGN KEY (purchase_uom_id)
+            REFERENCES uom(id)
+            );
+
+
+
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

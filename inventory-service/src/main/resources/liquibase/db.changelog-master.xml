@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+        <!-- Migrations -->
+        <include file="changelog/uom_group_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/uom_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/product_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/product_variant_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/product_uom_conversion_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/product_uom_price_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/product_barcode_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/price_list_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/price_list_item_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/product_category_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/warehouse_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/stock_location_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/stock_lot_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/stock_quant_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/stock_move_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/stock_picking_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/stock_picking_move_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/stock_reorder_rule_entity.xml" relativeToChangelogFile="true" />
+
+    <!-- TODO: add new change sets here! -->
+
+    <!-- End of Database Version 1.0 -->
+    <changeSet id="1000001" author="Mohamed_Fouad">
+        <tagDatabase tag="version_1.0" />
+    </changeSet>
+
+</databaseChangeLog>

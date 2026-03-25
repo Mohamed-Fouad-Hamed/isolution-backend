@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- Create entity Otp logs -->
+    <changeSet id="00012" author="MohamedFouad" context="dev, prod">
+
+        <sql>
+
+            
+	CREATE TABLE IF NOT EXISTS otp_logs
+	(
+  	    login character varying(50)  NOT NULL,
+   	    otp_token character varying(10)  NOT NULL,
+        expire_time character varying(30)  NOT NULL,
+    	otp_valid boolean NOT NULL DEFAULT false,
+    	CONSTRAINT otp_logs_pkey PRIMARY KEY (login)
+	);
+
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

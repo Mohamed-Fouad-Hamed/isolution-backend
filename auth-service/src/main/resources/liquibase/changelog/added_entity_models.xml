@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- Create entity models -->
+    <changeSet id="00047" author="MohamedFouad" context="dev, prod">
+
+
+        <sql>
+
+            CREATE TABLE sys_models (
+                id INTEGER NOT NULL,
+                name VARCHAR NOT NULL,
+                key_translate VARCHAR NOT NULL,
+                u_path VARCHAR NOT NULL,
+                module_id INTEGER,
+                CONSTRAINT app_sys_models_p_key PRIMARY KEY (id)
+            );
+
+            INSERT INTO sys_models VALUES(1,'Dashboard','model_dashboard','/model-dashboard',2);
+            INSERT INTO sys_models VALUES(2,'Customers','model_customers','/model-customers',2);
+            INSERT INTO sys_models VALUES(3,'Vendors','model_vendors','/model-vendors',2);
+            INSERT INTO sys_models VALUES(4,'Accounting','model_accounting','/model-accounting',2);
+            INSERT INTO sys_models VALUES(5,'Reporting','model_reporting','/model-reporting',2);
+            INSERT INTO sys_models VALUES(6,'Configuration','model_configuration','/model-configuration',2);
+
+        </sql>
+
+
+    </changeSet>
+</databaseChangeLog>

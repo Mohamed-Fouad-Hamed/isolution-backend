@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- Create entity user logs -->
+    <changeSet id="00000011" author="MohamedFouad" context="dev, prod">
+        <sql>
+
+            CREATE TABLE refresh_tokens (
+
+            id VARCHAR(50) NOT NULL,
+
+            login VARCHAR(255) NOT NULL,
+
+            token_hash VARCHAR(256) NOT NULL UNIQUE,
+
+            device_id VARCHAR(255),
+
+            expiry_date TIMESTAMPTZ NOT NULL,
+
+            used BOOLEAN NOT NULL DEFAULT FALSE,
+
+            revoked BOOLEAN NOT NULL DEFAULT FALSE,
+
+            created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+            CONSTRAINT app_refresh_tokens_p_key PRIMARY KEY (id)
+
+            );
+
+        </sql>
+    </changeSet>
+</databaseChangeLog>

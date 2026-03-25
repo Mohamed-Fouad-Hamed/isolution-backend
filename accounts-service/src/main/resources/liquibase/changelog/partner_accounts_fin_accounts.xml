@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- Create entity Partner -->
+    <changeSet id="00018" author="MohamedFouad" context="dev, prod">
+
+
+        <sql>
+
+            CREATE SEQUENCE partner_fin_prop_id_seq START 1;
+
+            CREATE TABLE partner_fin_account_property (
+
+                    id BIGINT PRIMARY KEY DEFAULT nextval('partner_fin_prop_id_seq'),
+
+                    partner_id BIGINT NOT NULL,
+                    account_id BIGINT NOT NULL,
+
+                    property_type VARCHAR(30) NOT NULL
+                    CHECK (property_type IN ('RECEIVABLE','PAYABLE')),
+
+                    fin_account_id BIGINT NOT NULL,
+
+                    created_at TIMESTAMP DEFAULT now(),
+
+                    CONSTRAINT uq_partner_company_property
+                    UNIQUE (partner_id, account_id, property_type),
+
+                    CONSTRAINT fk_prop_partner
+                    FOREIGN KEY (partner_id)
+                    REFERENCES partner(id),
+
+                    CONSTRAINT fk_prop_company
+                    FOREIGN KEY (account_id)
+                    REFERENCES app_accounts(id),
+
+                    CONSTRAINT fk_prop_fin_account
+                    FOREIGN KEY (fin_account_id)
+                    REFERENCES fin_accounts(id)
+            );
+
+            CREATE INDEX idx_prop_partner ON partner_fin_account_property(partner_id);
+            CREATE INDEX idx_prop_account ON partner_fin_account_property(account_id);
+
+
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

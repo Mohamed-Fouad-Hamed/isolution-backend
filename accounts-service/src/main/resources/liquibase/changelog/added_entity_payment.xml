@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- Create entity payment -->
+    <changeSet id="0005" author="MohamedFouad" context="dev, prod">
+
+
+        <sql>
+
+            CREATE TABLE payment_term (
+            id              BIGSERIAL PRIMARY KEY,
+            code            VARCHAR(50) NOT NULL UNIQUE,
+            name            VARCHAR(255) NOT NULL,
+            description     TEXT,
+            active          BOOLEAN NOT NULL DEFAULT TRUE,
+            created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+
+            CREATE TABLE payment_term_line (
+            id                BIGSERIAL PRIMARY KEY,
+            payment_term_id   BIGINT NOT NULL,
+
+            value_type        VARCHAR(20) NOT NULL,
+            value_amount      NUMERIC(10,2),
+
+            due_type          VARCHAR(20) NOT NULL,
+            days              INT DEFAULT 0,
+
+            sequence          INT NOT NULL DEFAULT 1,
+
+            CONSTRAINT fk_payment_term
+            FOREIGN KEY (payment_term_id)
+            REFERENCES payment_term(id)
+            ON DELETE CASCADE
+            );
+
+            CREATE INDEX idx_payment_term_line_term
+            ON payment_term_line(payment_term_id);
+
+            CREATE INDEX idx_payment_term_line_sequence
+            ON payment_term_line(sequence);
+
+            INSERT INTO payment_term (code, name)
+            VALUES ('CASH', 'الدفع نقداً');
+
+
+            INSERT INTO payment_term_line (
+            payment_term_id,
+            value_type,
+            due_type,
+            days,
+            sequence
+            )
+            VALUES (
+            (SELECT id FROM payment_term WHERE code='CASH'),
+            'balance',
+            'days_after_invoice',
+            0,
+            1
+            );
+
+            INSERT INTO payment_term (code, name)
+            VALUES ('NET15', 'صافي 15 يوم');
+
+            INSERT INTO payment_term_line (
+            payment_term_id,
+            value_type,
+            due_type,
+            days,
+            sequence
+            )
+            VALUES (
+            (SELECT id FROM payment_term WHERE code='NET15'),
+            'balance',
+            'days_after_invoice',
+            15,
+            1
+            );
+
+            INSERT INTO payment_term (code, name)
+            VALUES ('NET30', 'صافي 30 يوم');
+
+            INSERT INTO payment_term_line (
+            payment_term_id,
+            value_type,
+            due_type,
+            days,
+            sequence
+            )
+            VALUES (
+            (SELECT id FROM payment_term WHERE code='NET30'),
+            'balance',
+            'days_after_invoice',
+            30,
+            1
+            );
+
+            INSERT INTO payment_term (code, name)
+            VALUES ('NET60', 'صافي 60 يوم');
+
+            INSERT INTO payment_term_line (
+            payment_term_id,
+            value_type,
+            due_type,
+            days,
+            sequence
+            )
+            VALUES (
+            (SELECT id FROM payment_term WHERE code='NET60'),
+            'balance',
+            'days_after_invoice',
+            60,
+            1
+            );
+
+            INSERT INTO payment_term (code, name)
+            VALUES ('HALF30', '50% الآن و 50% بعد 30 يوم');
+
+            -- القسط الأول
+            INSERT INTO payment_term_line (
+            payment_term_id,
+            value_type,
+            value_amount,
+            due_type,
+            days,
+            sequence
+            )
+            VALUES (
+            (SELECT id FROM payment_term WHERE code='HALF30'),
+            'percent',
+            50,
+            'days_after_invoice',
+            0,
+            1
+            );
+
+            INSERT INTO payment_term_line (
+            payment_term_id,
+            value_type,
+            due_type,
+            days,
+            sequence
+            )
+            VALUES (
+            (SELECT id FROM payment_term WHERE code='HALF30'),
+            'balance',
+            'days_after_invoice',
+            30,
+            2
+            );
+
+        </sql>
+
+
+    </changeSet>
+</databaseChangeLog>

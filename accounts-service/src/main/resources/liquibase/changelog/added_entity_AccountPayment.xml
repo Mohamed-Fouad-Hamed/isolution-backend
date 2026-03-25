@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+
+    <!-- Create entity user role -->
+    <changeSet id="00023" author="MohamedFouad" context="dev, prod">
+
+
+        <sql>
+            CREATE TABLE IF NOT EXISTS account_payments
+            (
+                account_id BIGINT NOT NULL,
+                payment_id Integer NOT NULL,
+                wallet_number character varying(16) ,
+                wallet_password character varying(30) ,
+                card_holder_name character varying(100) ,
+                account_number character varying(16) ,
+                expiry_month character varying(2) ,
+                expiry_year character varying(2) ,
+                cvc character varying(4) ,
+                CONSTRAINT account_payments_pkey PRIMARY KEY (account_id, payment_id),
+                CONSTRAINT fk_app_account_11 FOREIGN KEY (account_id)
+                REFERENCES app_accounts (id) MATCH SIMPLE
+                ON UPDATE NO ACTION
+                ON DELETE NO ACTION,
+                CONSTRAINT fk_app_payments_11 FOREIGN KEY (payment_id)
+                REFERENCES payment_term (id) MATCH SIMPLE
+                ON UPDATE NO ACTION
+                ON DELETE NO ACTION
+            );
+        </sql>
+
+
+    </changeSet>
+</databaseChangeLog>

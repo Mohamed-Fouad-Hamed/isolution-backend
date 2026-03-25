@@ -1,0 +1,11 @@
+server:
+  port: 8761
+  servlet:
+    context-path: /
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  instance:
+    hostname: discovery-service

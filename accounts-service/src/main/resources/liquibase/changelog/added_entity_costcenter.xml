@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+
+    <!-- create entity cost_centers -->
+    <changeSet id="00014" author="MohamedFouad" context="dev, prod">
+
+
+        <sql>
+
+            CREATE TABLE IF NOT EXISTS cost_centers (
+                id Integer not null,
+                created_by character varying(255) ,
+                created_date timestamp(6) without time zone NOT NULL,
+                last_modified_by character varying(255) ,
+                last_modified_date timestamp(6) without time zone,
+                deleted_by character varying(255) ,
+                deleted_date timestamp(6) without time zone,
+                is_delete boolean  DEFAULT false,
+                serial_id VARCHAR(50) UNIQUE NOT NULL,
+                code VARCHAR(50) ,
+                name VARCHAR(50) UNIQUE NOT NULL,
+                description VARCHAR(100),
+                department_id Integer,
+                CONSTRAINT app_cost_centers_p_key PRIMARY KEY (id)
+            );
+
+            CREATE SEQUENCE IF NOT EXISTS cost_center_id_seq
+                INCREMENT 1
+                START 1
+                MINVALUE 1
+                CACHE 1
+            OWNED BY cost_centers.id;
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

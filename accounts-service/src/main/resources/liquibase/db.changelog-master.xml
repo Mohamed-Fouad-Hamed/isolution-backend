@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+        <!-- Migrations -->
+        <include file="changelog/added_entity_fin_accounts.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_industry.xml" relativeToChangelogFile="true" />
+        <include file="changelog/account_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/partner_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_Place.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_AccountPlaces.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_Payment.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_AccountPayment.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_fiscal_years.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_journal_entries.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_invoices.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_bills.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_fin_payments.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_id_sequence.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_department.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_costcenter.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_modules.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_models.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_currency_exchange.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_Countries_States.xml" relativeToChangelogFile="true" />
+        <include file="changelog/added_entity_ResourceFile.xml" relativeToChangelogFile="true" />
+
+
+    <!-- TODO: add new change sets here! -->
+
+    <!-- End of Database Version 1.0 -->
+    <changeSet id="1000001" author="Mohamed_Fouad">
+        <tagDatabase tag="version_1.0" />
+    </changeSet>
+
+</databaseChangeLog>

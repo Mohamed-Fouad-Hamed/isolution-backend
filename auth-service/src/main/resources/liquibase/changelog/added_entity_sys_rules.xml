@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- Create entity rules -->
+    <changeSet id="00048" author="MohamedFouad" context="dev, prod">
+
+
+        <sql>
+
+            CREATE TABLE sys_rules (
+                id INTEGER NOT NULL,
+                model_id INTEGER,
+                name VARCHAR NOT NULL,
+                read boolean default false,
+                write boolean default false,
+                creation boolean default false,
+                domain VARCHAR NOT NULL,
+                domain_force VARCHAR NOT NULL,
+                CONSTRAINT app_sys_rules_p_key PRIMARY KEY (id)
+            );
+
+            INSERT INTO sys_rules VALUES(1,1,'read',true,false,false,'','');
+            INSERT INTO sys_rules VALUES(2,1,'write',false,true,false,'','');
+            INSERT INTO sys_rules VALUES(3,1,'create',false,false,true,'','');
+            INSERT INTO sys_rules VALUES(4,1,'domain',false,false,false,'','');
+            INSERT INTO sys_rules VALUES(5,1,'domain_force',false,false,false,'','');
+
+
+        </sql>
+
+
+    </changeSet>
+</databaseChangeLog>

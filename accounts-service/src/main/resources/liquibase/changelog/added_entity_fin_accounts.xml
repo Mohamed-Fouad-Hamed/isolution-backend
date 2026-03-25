@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- Create entity financial accounts -->
+    <changeSet id="0006" author="MohamedFouad" context="dev, prod">
+
+
+        <sql>
+
+            CREATE TABLE IF NOT EXISTS fin_account_types (
+                id Integer not null,
+                name VARCHAR(50) UNIQUE NOT NULL,
+                description TEXT,
+                CONSTRAINT app_fin_account_types_p_key PRIMARY KEY (id)
+            );
+
+            CREATE SEQUENCE IF NOT EXISTS fin_account_types_id_seq
+                INCREMENT 1
+                START 1
+                NO MINVALUE
+                NO MAXVALUE
+                CACHE 1
+            OWNED BY fin_account_types.id;
+
+            CREATE TABLE IF NOT EXISTS fin_accounts (
+                id Integer not null,
+                m_account_id BIGINT not null,
+                created_by character varying(255) ,
+                created_date timestamp(6) without time zone NOT NULL,
+                last_modified_by character varying(255) ,
+                last_modified_date timestamp(6) without time zone,
+                deleted_by character varying(255) ,
+                deleted_date timestamp(6) without time zone,
+                is_delete boolean  DEFAULT false,
+                serial_id VARCHAR(50) UNIQUE NOT NULL,
+                name VARCHAR(100) NOT NULL,
+                description TEXT,
+                parent_serial_id VARCHAR(50) REFERENCES fin_accounts(serial_id),
+                account_type_id INTEGER ,
+                account_category VARCHAR(50),
+                balance DECIMAL(15,2) DEFAULT 0,
+                currency_id integer ,
+                is_active BOOLEAN DEFAULT TRUE,
+                is_debit BOOLEAN DEFAULT FALSE,
+                is_cash_account BOOLEAN DEFAULT FALSE,
+                is_bank_account BOOLEAN DEFAULT FALSE,
+                is_control_account BOOLEAN DEFAULT FALSE,
+                CONSTRAINT app_fin_accounts_p_key PRIMARY KEY (id)
+            );
+
+            CREATE SEQUENCE IF NOT EXISTS fin_accounts_id_seq
+                INCREMENT 1
+                START 38
+                MINVALUE 1
+                MAXVALUE 100000000
+                CACHE 1
+            OWNED BY fin_accounts.id;
+
+            -- Initial data
+            INSERT INTO fin_account_types (id,name, description) VALUES
+            (1,'Asset', 'Resources owned by the business'),
+            (2,'Liability', 'Debts owed by the business'),
+            (3,'Equity', 'Owner''s interest in the business'),
+            (4,'Revenue', 'Income earned by the business'),
+            (5,'Expense', 'Costs incurred by the business');
+
+
+            INSERT INTO fin_accounts (id , m_account_id, created_by, created_date, last_modified_by, last_modified_date, serial_id, name, parent_serial_id, account_type_id, currency_id) VALUES
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '1', 'اصول', NULL, 1, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '11', 'اصول ثابته', 1, 1, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '12', 'اصول متداوله', 1, 1, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '13', 'أرصده مدينه اخرى', 1, 1, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '2', 'خصوم', NULL, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '21', 'ألتزامات طويله الاجل', 2, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '22', 'خصوم متداوله', 2, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '23', 'أرصده دائنه أخرى', 2, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '24', 'حقوق الملكيه', 2, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '3', 'مصروفات', NULL, 5, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '31', 'صافى المشتريات', 3, 5, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '32', 'خصم مسموح به', 3, 5, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '33', 'المصروفات التشغيليه', 3, 5, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '34', 'اجمالي مصروفات السيارات', 3, 5, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '35', 'المصروفات الإداريه', 3, 5, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '38', 'خصم عروض', 3, 5, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '39', 'خصم حافز التزام ', 3, 5, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '4', 'ايرادات', NULL, 4, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '41', ' المبيعات', 4, 4, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '42', 'خصم مكتسب', 4, 4, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '43', 'فرق أقفال الخزن', 4, 4, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '44', 'إيرادات متنوعه', 4, 4, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '45', 'اجمالي خصم مؤجل', 4, 4, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '5', 'حسابات نظاميه مدينه', NULL, 1, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '51', 'حافظة الشيكات المصدرة', 5, 1, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '52', 'حافظة الكمبيالات المصدرة', 5, 1, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '53', 'حافظة الشيكات المرسلة للتحصيل', 5, 1, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '6', 'حسابات نظاميه دائنه', NULL, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '61', 'حافظة الشيكات المستلمة', 6, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '62', 'حافظة الشيكات المرتدة', 6, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '63', 'حافظة الكمبيالات المستلمة', 6, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '64', 'حافظة الكمبيالات المرتدة', 6, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '65', 'حافظة الايداع البنكية', 6, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '66', 'حافظة الشيكات المظهرة', 6, 2, 1),
+            (nextval('fin_accounts_id_seq'),1, '01110010908', CURRENT_TIMESTAMP, '01110010908', CURRENT_TIMESTAMP, '67', 'حافظة الكمبيالات المظهرة', 6, 2, 1);
+
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

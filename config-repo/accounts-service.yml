@@ -1,0 +1,106 @@
+server:
+  port: 8083
+spring:
+
+  threads:
+    virtual:
+      enabled: true
+
+  main:
+    allow-bean-definition-overriding: true
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+  application:
+    name: accounts-service
+
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000ms
+      connect-timeout: 2000ms
+
+  cloud:
+    config:
+      uri: http://config-service:8888
+      fail-fast: false
+      retry:
+        max-attempts: 6
+        initial-interval: 2000
+
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5435/account_db
+    username: account_user
+    password: account_pass
+    driverClassName: org.postgresql.Driver
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+      maximum-pool-size: 50
+      minimum-idle: 10
+      idle-timeout: 30000
+      connection-timeout: 20000
+      max-lifetime: 1800000
+
+
+  liquibase:
+    change-log: liquibase/db.changelog-master.xml
+    enabled: true
+    drop-first: false
+    default-schema: public
+
+  redis:
+    host: ${REDIS_HOST:redis}
+    port: ${REDIS_PORT:6379}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+
+
+security:
+  jwt:
+    filter-exclude-urls:
+      - /jwks.json
+    jwks-ttl: 600
+    clock-skew-seconds: 604800
+    jwks-url: http://localhost:8080/api/auth/jwks.json
+    redis-enabled: true
+    refresh-ttl-days: 30
+    access-ttl-seconds: 900
+    issuer: "accounts-service"
+    private-key: keys/ecdsa-private.pem
+    public-key: keys/ecdsa-public.pem
+    access-token-minutes: 15
+    refresh-token-days: 30
+  keystore:
+    # AES key لتشفير الخاص — خزنه في secret manager (env/VM secret) مش هنا
+    # Production Use : ${ENCRYPTION_KEY}
+    encryption-password: "JH4f9bL2t4x8Raa8vV2tV6sKp8jJsdfS9Hkddf8sE3A="
+    retain-keys: 3 # عدد المفاتيح المحفوظة (current + previous...)
+    rotation-cron: 0 0 3 * * ? # مثال: كل يوم 3:00
+    redis-topic: jwt-keys-updated
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

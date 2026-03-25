@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!-- Create entity modules -->
+    <changeSet id="00019" author="MohamedFouad" context="dev, prod">
+        <sql>
+
+            CREATE TABLE industry (
+            id                BIGSERIAL PRIMARY KEY,
+            code              VARCHAR(50) NOT NULL UNIQUE,
+            name              VARCHAR(255) NOT NULL,
+            description       TEXT,
+            parent_id         BIGINT,
+            active            BOOLEAN NOT NULL DEFAULT TRUE,
+            created_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+            CONSTRAINT fk_industry_parent
+            FOREIGN KEY (parent_id)
+            REFERENCES industry(id)
+            ON DELETE SET NULL
+            );
+
+            CREATE INDEX idx_industry_parent ON industry(parent_id);
+            CREATE INDEX idx_industry_active ON industry(active);
+            CREATE INDEX idx_industry_name ON industry(name);
+
+            INSERT INTO industry (code, name) VALUES
+            ('AGR', 'الزراعة'),
+            ('IND', 'الصناعة'),
+            ('CON', 'التشييد والبناء'),
+            ('TRD', 'التجارة'),
+            ('TRN', 'النقل والخدمات اللوجستية'),
+            ('ITC', 'تقنية المعلومات والاتصالات'),
+            ('FIN', 'الخدمات المالية'),
+            ('HLT', 'الرعاية الصحية'),
+            ('EDU', 'التعليم'),
+            ('ENG', 'الطاقة والمرافق'),
+            ('HOS', 'السياحة والضيافة'),
+            ('MED', 'الإعلام والترفيه'),
+            ('RLE', 'العقارات'),
+            ('GOV', 'القطاع الحكومي'),
+            ('NPO', 'المنظمات غير الربحية');
+
+
+
+            INSERT INTO industry (code, name, parent_id)
+            VALUES
+            ('AGR-CROP', 'الزراعة النباتية',
+            (SELECT id FROM industry WHERE code='AGR')),
+            ('AGR-LIVE', 'الثروة الحيوانية',
+            (SELECT id FROM industry WHERE code='AGR'));
+
+
+            INSERT INTO industry (code, name, parent_id)
+            VALUES
+            ('IND-FOOD', 'الصناعات الغذائية',
+            (SELECT id FROM industry WHERE code='IND')),
+            ('IND-TEXT', 'صناعة النسيج والملابس',
+            (SELECT id FROM industry WHERE code='IND')),
+            ('IND-MET', 'الصناعات المعدنية',
+            (SELECT id FROM industry WHERE code='IND')),
+            ('IND-CHEM', 'الصناعات الكيميائية',
+            (SELECT id FROM industry WHERE code='IND')),
+            ('IND-AUTO', 'صناعة السيارات',
+            (SELECT id FROM industry WHERE code='IND')),
+            ('IND-ELEC', 'الصناعات الإلكترونية',
+            (SELECT id FROM industry WHERE code='IND'));
+
+
+            INSERT INTO industry (code, name, parent_id)
+            VALUES
+            ('TRD-RET', 'تجارة التجزئة',
+            (SELECT id FROM industry WHERE code='TRD')),
+            ('TRD-WHL', 'تجارة الجملة',
+            (SELECT id FROM industry WHERE code='TRD')),
+            ('TRD-IMP', 'الاستيراد والتصدير',
+            (SELECT id FROM industry WHERE code='TRD'));
+
+
+            INSERT INTO industry (code, name, parent_id)
+            VALUES
+            ('TRN-LAND', 'النقل البري',
+            (SELECT id FROM industry WHERE code='TRN')),
+            ('TRN-SEA', 'النقل البحري',
+            (SELECT id FROM industry WHERE code='TRN')),
+            ('TRN-AIR', 'النقل الجوي',
+            (SELECT id FROM industry WHERE code='TRN')),
+            ('TRN-LOG', 'الخدمات اللوجستية',
+            (SELECT id FROM industry WHERE code='TRN'));
+
+
+            INSERT INTO industry (code, name, parent_id)
+            VALUES
+            ('ITC-SOFT', 'تطوير البرمجيات',
+            (SELECT id FROM industry WHERE code='ITC')),
+            ('ITC-HARD', 'الأجهزة والشبكات',
+            (SELECT id FROM industry WHERE code='ITC')),
+            ('ITC-TEL', 'الاتصالات',
+            (SELECT id FROM industry WHERE code='ITC'));
+
+
+            INSERT INTO industry (code, name, parent_id)
+            VALUES
+            ('FIN-BANK', 'البنوك',
+            (SELECT id FROM industry WHERE code='FIN')),
+            ('FIN-INS', 'التأمين',
+            (SELECT id FROM industry WHERE code='FIN')),
+            ('FIN-INV', 'الاستثمار',
+            (SELECT id FROM industry WHERE code='FIN'));
+
+
+            INSERT INTO industry (code, name, parent_id)
+            VALUES
+            ('HLT-HOSP', 'المستشفيات',
+            (SELECT id FROM industry WHERE code='HLT')),
+            ('HLT-PHAR', 'الصيدليات',
+            (SELECT id FROM industry WHERE code='HLT')),
+            ('HLT-MED', 'المراكز الطبية',
+            (SELECT id FROM industry WHERE code='HLT'));
+
+
+            INSERT INTO industry (code, name, parent_id)
+            VALUES
+            ('EDU-SCH', 'المدارس',
+            (SELECT id FROM industry WHERE code='EDU')),
+            ('EDU-UNI', 'الجامعات',
+            (SELECT id FROM industry WHERE code='EDU')),
+            ('EDU-TRN', 'مراكز التدريب',
+            (SELECT id FROM industry WHERE code='EDU'));
+
+
+            INSERT INTO industry (code, name, parent_id)
+            VALUES
+            ('ENG-OIL', 'النفط والغاز',
+            (SELECT id FROM industry WHERE code='ENG')),
+            ('ENG-REN', 'الطاقة المتجددة',
+            (SELECT id FROM industry WHERE code='ENG')),
+            ('ENG-UTIL', 'المياه والكهرباء',
+            (SELECT id FROM industry WHERE code='ENG'));
+
+
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- Create entity Partner -->
+    <changeSet id="0002" author="MohamedFouad" context="dev, prod">
+
+
+        <sql>
+
+            CREATE SEQUENCE IF NOT EXISTS partner_id_seq
+                START 1;
+
+            CREATE TABLE partner (
+
+                id BIGINT PRIMARY KEY DEFAULT nextval('partner_id_seq'),
+
+                serial_id VARCHAR(50) NOT NULL UNIQUE,
+                name VARCHAR(255) NOT NULL,
+                display_name VARCHAR(255),
+                parent_id BIGINT,
+                is_company BOOLEAN NOT NULL DEFAULT false,
+                company_type VARCHAR(20) ,
+
+                customer_rank INT NOT NULL DEFAULT 0,
+                supplier_rank INT NOT NULL DEFAULT 0,
+
+                street VARCHAR(255),
+                street2 VARCHAR(255),
+                city VARCHAR(100),
+                zip VARCHAR(20),
+                state_id INT,
+                country_id INT,
+
+                email VARCHAR(255),
+                phone VARCHAR(50),
+                mobile VARCHAR(50),
+                website VARCHAR(255),
+
+                property_account_receivable_id BIGINT,
+                property_account_payable_id BIGINT,
+
+                vat VARCHAR(50),
+                credit_limit NUMERIC(15,2) DEFAULT 0,
+                currency_id INT,
+
+                employee BOOLEAN DEFAULT false,
+
+                type VARCHAR(20) ,
+                lang VARCHAR(10),
+                tz VARCHAR(50),
+
+                company_name VARCHAR(255),
+                commercial_company_name VARCHAR(255),
+                commercial_partner_id BIGINT,
+
+                industry_id INT,
+                property_payment_term_id INT,
+                property_product_price_list_id INT,
+
+                created_by character varying(50) ,
+                created_date timestamp(6) without time zone NOT NULL,
+                last_modified_by character varying(50) ,
+                last_modified_date timestamp(6) without time zone,
+                deleted_by character varying(50) ,
+                deleted_date timestamp(6) without time zone,
+                is_delete boolean  DEFAULT false,
+
+                CONSTRAINT fk_partner_parent FOREIGN KEY (parent_id) REFERENCES partner(id),
+                CONSTRAINT fk_partner_commercial FOREIGN KEY (commercial_partner_id) REFERENCES partner(id)
+            );
+
+
+            CREATE INDEX idx_partner_serial_id ON partner(serial_id);
+            CREATE INDEX idx_partner_name ON partner(name);
+            CREATE INDEX idx_partner_parent ON partner(parent_id);
+            CREATE INDEX idx_partner_customer_rank ON partner(customer_rank);
+            CREATE INDEX idx_partner_supplier_rank ON partner(supplier_rank);
+
+
+            INSERT INTO partner (
+                        serial_id,
+                        name,
+                        is_company ,
+                        company_type,
+                        commercial_partner_id,
+                        created_by ,
+                        created_date ,
+                        last_modified_by ,
+                         last_modified_date
+                        ) VALUES
+                        (
+                         'PA0000000001',
+                         'ISolution APP',
+                          true,
+                          'SYSTEM',
+                          1 ,
+                          '01110010908' ,
+                           CURRENT_TIMESTAMP,
+                           '01110010908',
+                            CURRENT_TIMESTAMP
+                 );
+
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,19 @@
+FROM maven:3.9.6-eclipse-temurin-17
+
+ARG MODULE=auth-service
+
+ENV MODULE=${MODULE}
+
+WORKDIR /workspace
+
+# انسخ كل المشروع للمسار الرئيسي
+COPY . .
+
+# نفتح البورتات
+EXPOSE 8081
+EXPOSE 5005
+
+ENTRYPOINT mvn -pl ${MODULE} -am spring-boot:run \
+  -Dspring-boot.run.jvmArguments="\
+    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005" \
+  -Dspring-boot.run.profiles=dev

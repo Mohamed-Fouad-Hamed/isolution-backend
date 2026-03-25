@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- Create entity language -->
+    <changeSet id="00008" author="MohamedFouad" context="dev, prod">
+
+        <sql>
+            CREATE TABLE IF NOT EXISTS app_languages
+            (
+                id integer NOT NULL ,
+                dir character varying(3)  NOT NULL,
+                display character varying(20)   NOT NULL,
+                s_cut character varying(20)   NOT NULL,
+                translate_key character varying(20)  NOT NULL,
+                CONSTRAINT app_languages_pkey PRIMARY KEY (id)
+            );
+            CREATE SEQUENCE IF NOT EXISTS app_languages_id_seq
+                INCREMENT 1
+                START 1
+                NO MINVALUE
+                NO MAXVALUE
+                CACHE 1
+            OWNED BY app_languages.id;
+
+            INSERT INTO app_languages(
+            id,  display, s_cut,dir, translate_key)
+            VALUES (nextval('app_languages_id_seq'), 'Arabic','ar','RTL','lang.ar');
+
+            INSERT INTO app_languages(
+            id,  display, s_cut,dir, translate_key)
+            VALUES (nextval('app_languages_id_seq'),'English','en','LTR','lang.en');
+
+        </sql>
+
+
+    </changeSet>
+</databaseChangeLog>

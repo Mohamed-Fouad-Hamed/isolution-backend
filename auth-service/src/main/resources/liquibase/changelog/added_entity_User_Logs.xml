@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- Create entity user logs -->
+    <changeSet id="00013" author="MohamedFouad" context="dev, prod">
+        <sql>
+            CREATE TABLE IF NOT EXISTS user_logs
+		(
+    		 login character varying(50)  NOT NULL,
+             log_token character varying(255)  NOT NULL,
+    		 remember_me boolean NOT NULL DEFAULT false,
+    		 CONSTRAINT user_logs_pkey PRIMARY KEY (login)
+		);
+
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>

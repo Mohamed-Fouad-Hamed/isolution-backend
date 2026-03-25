@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <!-- Create entity places -->
+    <changeSet id="0003" author="MohamedFouad" context="dev, prod">
+        <sql>
+
+            CREATE TABLE IF NOT EXISTS app_places
+            (
+            id Integer NOT NULL,
+            apartment_mark character varying(20)  NOT NULL,
+            build_name character varying(50)  NOT NULL,
+            lat double precision NOT NULL,
+            lng double precision NOT NULL,
+            level_apartment character varying(20) ,
+            phone_number character varying(25)  NOT NULL,
+            place_name character varying(50) ,
+            special_mark character varying(50) ,
+            street character varying(50)  NOT NULL,
+            CONSTRAINT app_places_pkey PRIMARY KEY (id)
+            );
+
+            CREATE SEQUENCE IF NOT EXISTS app_places_id_seq
+            INCREMENT 1
+            START 1
+            NO MINVALUE
+            NO MAXVALUE
+            CACHE 1
+            OWNED BY app_places.id;
+
+        </sql>
+
+
+    </changeSet>
+</databaseChangeLog>
