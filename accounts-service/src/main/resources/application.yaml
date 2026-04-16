@@ -125,3 +125,10 @@ logging:
         web:
           servlet:
             handler: TRACE
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 3000
+        readTimeout: 5000

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "product_template")
@@ -41,6 +42,10 @@ public class ProductTemplate {
     private BigDecimal volume;
 
     private Boolean active = true;
+
+    @OneToMany(mappedBy = "template")
+    private List<Product> variants;
+
 }
 
 

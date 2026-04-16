@@ -21,6 +21,12 @@ public class PartnerController {
         return ResponseEntity.ok(service.create(dto));
     }
 
+    @GetMapping("/{id}/exists")
+    public ResponseEntity<Boolean> exists(@PathVariable Long id) {
+        boolean exists = service.existsById(id);
+        return ResponseEntity.ok(exists);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<PartnerResponseDto> get(@PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));

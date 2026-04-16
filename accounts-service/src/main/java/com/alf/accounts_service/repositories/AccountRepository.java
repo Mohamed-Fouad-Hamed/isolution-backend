@@ -19,7 +19,9 @@ public interface AccountRepository extends JpaRepository<Account,Long> {
     """)
     List<Account> findAllWithParent();
     boolean existsByOwnerId(String ownerId);
+    boolean existsById(Long id);
     boolean existsBySerialId(String serialId);
+
    // List<Account> findByFactoryAndAccountType( boolean is_factory, AccountType accountType);
    // List<Account> findByAccountType( AccountType accountType);
    // List<Account> findByFactoryAndAccountTypeAndIdNotIn(  boolean is_factory,AccountType accountType , List<Long> ids );

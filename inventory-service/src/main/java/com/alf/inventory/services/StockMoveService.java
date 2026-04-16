@@ -5,6 +5,8 @@ import com.alf.inventory.repository.StockMoveRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class StockMoveService {
@@ -14,5 +16,7 @@ public class StockMoveService {
     public StockMove create(StockMove move){
         return repository.save(move);
     }
+
+
 
 }

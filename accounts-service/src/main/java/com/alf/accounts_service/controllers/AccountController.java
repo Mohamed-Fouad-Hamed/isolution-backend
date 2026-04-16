@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,7 +47,7 @@ public class AccountController {
         return ResponseEntity.ok(result);
     }
 
-
+    // --- REGISTER ---
     @PostMapping("/company-register")
     public ResponseEntity<MessageResponse> accountRegister(@RequestBody AccountCompany accountCompany){
 
@@ -56,7 +57,7 @@ public class AccountController {
 
         Map<String,Long> result = new HashMap<>();
 
-        if( accountCompany.accountName() == "" || accountCompany.accountName() == null)
+        if(Objects.equals(accountCompany.accountName(), "") || accountCompany.accountName() == null)
             return  ResponseEntity.ok(
                     new MessageResponse("Name is not found",703,703,null,null)
             );
@@ -74,7 +75,6 @@ public class AccountController {
 
         return ResponseEntity.ok( new MessageResponse(message,status,status,result,null)  );
     }
-
 
 
 }

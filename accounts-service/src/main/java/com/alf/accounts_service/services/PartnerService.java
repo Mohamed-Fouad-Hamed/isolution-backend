@@ -20,6 +20,12 @@ public class PartnerService {
         private final PartnerRepository partnerRepo;
         private final PartnerMapper mapper;
 
+
+        /* ========= EXISTS ======== */
+        public boolean existsById(Long id){
+            return partnerRepo.existsById(id);
+        }
+
         /* ================= CREATE ================= */
 
         public PartnerResponseDto create(PartnerCreateDto dto) {
