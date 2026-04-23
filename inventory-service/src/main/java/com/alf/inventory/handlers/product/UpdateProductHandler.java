@@ -17,7 +17,7 @@ public class UpdateProductHandler {
     private final ProductRepository productRepository;
     private final ProductTemplateRepository templateRepository;
     private final UomRepository uomRepository;
-
+    private final ProductMapper productMapper;
 
     @Transactional
     public ProductDTO update(Long id, UpdateProductCommand cmd) {
@@ -29,17 +29,11 @@ public class UpdateProductHandler {
         product.setBarcode(cmd.barcode());
 
         if(cmd.templateId() != null){
-            product.setTemplate(
-                    templateRepository.getReferenceById(cmd.templateId())
+            product.setTemplateId(
+                    cmd.templateId()
             );
         }
 
-        if(cmd.uomId() != null){
-            product.setUom(
-                    uomRepository.getReferenceById(cmd.uomId())
-            );
-        }
-
-        return ProductMapper.toDto(product);
+        return productMapper.toDto(product);
     }
 }

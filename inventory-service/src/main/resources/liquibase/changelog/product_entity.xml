@@ -27,10 +27,15 @@
             product_type VARCHAR(20) NOT NULL,
             -- product / service / consumable
 
+            company_id BIGINT,
+
             category_id BIGINT,
 
             uom_id BIGINT NOT NULL,
+
             purchase_uom_id BIGINT,
+
+            sale_uom_id BIGINT,
 
             weight NUMERIC(12,3),
             volume NUMERIC(12,3),
@@ -47,9 +52,27 @@
 
             CONSTRAINT fk_purchase_uom
             FOREIGN KEY (purchase_uom_id)
-            REFERENCES uom(id)
+            REFERENCES uom(id),
+
+            CONSTRAINT fk_sales_uom
+                FOREIGN KEY (sale_uom_id)
+                    REFERENCES uom(id)
             );
 
+
+          --  CREATE INDEX idx_template_name
+          --      ON product_template USING BTREE (name);
+
+            CREATE INDEX idx_template_name_trgm
+                ON product_template USING GIN (name gin_trgm_ops);
+
+
+            CREATE INDEX idx_template_company
+                ON product_template (company_id);
+
+
+            CREATE INDEX idx_template_uom_group
+                ON product_template (uom_group_id);
 
 
         </sql>

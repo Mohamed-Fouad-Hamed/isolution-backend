@@ -1,14 +1,9 @@
 package com.alf.inventory.dto;
 
-public record CreateProductCommand(
-
+public record ProductVariantRequest(
         String sku,
-
+        Long productTemplateId,
         String barcode,
-
-        Long templateId,
-        Long uomId,
         Boolean active
-
-) {}
-
+) {
+}

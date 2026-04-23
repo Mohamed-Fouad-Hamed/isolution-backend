@@ -13,10 +13,6 @@
 	<name>inventory-service</name>
 	<description>Project for inventory service</description>
 
-	<properties>
-		<maven.compiler.source>21</maven.compiler.source>
-		<maven.compiler.target>21</maven.compiler.target>
-	</properties>
 
 	<dependencies>
 		<!-- Web & JPA -->
@@ -103,6 +99,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>1.6.2</version>
+			<scope>compile</scope>
 		</dependency>
 
 	</dependencies>

@@ -22,20 +22,25 @@ public class ProductTemplate {
 
     private String name;
 
+    @Column(name="product_type")
     @Enumerated(EnumType.STRING)
     private ProductType productType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private ProductCategory category;
+    @Column(name="company_id")
+    private Long companyId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uom_id")
-    private Uom uom;
+    @Column(name = "category_id")
+    private Long categoryId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "purchase_uom_id")
-    private Uom purchaseUom;
+
+    @Column(name = "uom_id")
+    private Long uomId;
+
+    @Column(name = "purchase_uom_id")
+    private Long purchaseUomId;
+
+    @Column(name = "sales_uom_id")
+    private Long saleUomId;
 
     private BigDecimal weight;
 
@@ -43,8 +48,6 @@ public class ProductTemplate {
 
     private Boolean active = true;
 
-    @OneToMany(mappedBy = "template")
-    private List<Product> variants;
 
 }
 

@@ -24,6 +24,9 @@ public class UomGroup {
     @Column(nullable = false)
     private String name;
 
+    @Column(name="company_id")
+    private Long companyId;
+
     private String description;
 
     private Boolean active = true;

@@ -33,7 +33,7 @@ public class UomConversionService {
 
     private void validateSameGroup(Uom from, Uom to) {
 
-        if (!from.getGroup().getId().equals(to.getGroup().getId())) {
+        if (!from.getGroupId().equals(to.getGroupId())) {
             throw new RuntimeException("Different UOM Groups not allowed");
         }
     }

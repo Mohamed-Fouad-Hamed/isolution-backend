@@ -10,15 +10,15 @@ import org.springframework.stereotype.Component;
 public class ProductTemplateMapper {
 
     public ProductTemplate toEntity(CreateProductTemplateCommand cmd,
-                                    Uom uom,
-                                    Uom purchaseUom) {
+                                    Long uomId,
+                                    Long purchaseUomId) {
 
         ProductTemplate entity = new ProductTemplate();
 
         entity.setName(cmd.name());
         entity.setProductType(cmd.productType());
-        entity.setUom(uom);
-        entity.setPurchaseUom(purchaseUom);
+        entity.setUomId(uomId);
+        entity.setPurchaseUomId(purchaseUomId);
         entity.setWeight(cmd.weight());
         entity.setVolume(cmd.volume());
 
@@ -31,8 +31,8 @@ public class ProductTemplateMapper {
                 entity.getId(),
                 entity.getName(),
                 entity.getProductType(),
-                entity.getUom().getId(),
-                entity.getPurchaseUom() != null ? entity.getPurchaseUom().getId() : null,
+                entity.getUomId(),
+                entity.getPurchaseUomId(),
                 entity.getWeight(),
                 entity.getVolume(),
                 entity.getActive()

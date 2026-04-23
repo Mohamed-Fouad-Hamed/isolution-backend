@@ -24,6 +24,8 @@
 
             template_id BIGINT NOT NULL,
 
+            tracking varchar(50) NOT NULL ,
+
             sku VARCHAR(100) UNIQUE,
 
             barcode VARCHAR(100),
@@ -35,6 +37,26 @@
             REFERENCES product_template(id)
             );
 
+
+            CREATE UNIQUE INDEX idx_variant_sku
+                ON product (sku);
+
+
+            CREATE INDEX idx_variant_template
+                ON product (template_id);
+
+
+            CREATE INDEX idx_variant_barcode
+                ON product (barcode);
+
+
+            CREATE INDEX idx_variant_company_active
+                ON product (company_id, active);
+
+
+            CREATE INDEX idx_variant_active_only
+                ON product (template_id)
+                WHERE active = true;
         </sql>
 
     </changeSet>

@@ -21,7 +21,7 @@
                 id BIGSERIAL PRIMARY KEY,
                 code VARCHAR(50) UNIQUE NOT NULL,
                 name VARCHAR(255) NOT NULL,
-
+                company_id BIGINT,
                 group_id BIGINT NOT NULL,
 
                 factor NUMERIC(18,6) NOT NULL,
@@ -34,6 +34,13 @@
                 FOREIGN KEY (group_id)
                 REFERENCES uom_group(id)
             );
+
+            CREATE INDEX idx_uom_group
+                ON uom (uom_group_id);
+
+            CREATE INDEX idx_uom_company
+                ON uom (company_id);
+
         </sql>
 
     </changeSet>

@@ -22,6 +22,7 @@
             id BIGSERIAL PRIMARY KEY,
             code VARCHAR(50) UNIQUE NOT NULL,
             name VARCHAR(255) NOT NULL,
+            company_id BIGINT,
             description TEXT,
             active BOOLEAN DEFAULT TRUE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

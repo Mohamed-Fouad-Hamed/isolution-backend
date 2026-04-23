@@ -1,6 +1,7 @@
 package com.alf.inventory.handlers.product;
 
 import com.alf.inventory.dto.ProductDTO;
+import com.alf.inventory.dto.ProductVariantResponse;
 import com.alf.inventory.mapper.ProductMapper;
 import com.alf.inventory.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class SearchProductHandler {
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
     @Transactional(readOnly = true)
-    public Page<ProductDTO> list(Pageable pageable){
-
-        return productRepository
-                .findAll(pageable)
-                .map(ProductMapper::toDto);
-
+    public Page<ProductVariantResponse> list(Pageable pageable){
+        return productRepository.findAllDetailed(pageable);
     }
 }

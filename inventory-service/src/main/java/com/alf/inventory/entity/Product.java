@@ -20,9 +20,8 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private TrackingType tracking; // NONE, LOT, SERIAL
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "template_id")
-    private ProductTemplate template;
+    @Column(name = "template_id")
+    private Long templateId;
 
     @Column(unique = true)
     private String sku;

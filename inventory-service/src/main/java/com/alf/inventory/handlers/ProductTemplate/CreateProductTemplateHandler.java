@@ -21,16 +21,8 @@ public class CreateProductTemplateHandler {
 
     public Long handle(CreateProductTemplateCommand cmd) {
 
-        Uom uom = uomRepository.getReferenceById(cmd.uomId());
-
-        Uom purchaseUom = null;
-
-        if (cmd.purchaseUomId() != null) {
-            purchaseUom = uomRepository.getReferenceById(cmd.purchaseUomId());
-        }
-
         ProductTemplate entity =
-                mapper.toEntity(cmd, uom, purchaseUom);
+                mapper.toEntity(cmd, cmd.uomId(), cmd.purchaseUomId());
 
         repository.save(entity);
 

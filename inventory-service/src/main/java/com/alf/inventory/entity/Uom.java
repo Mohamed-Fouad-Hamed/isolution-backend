@@ -24,9 +24,11 @@ public class Uom {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name="company_id")
+    private Long companyId;
+
     @JoinColumn(name = "group_id")
-    private UomGroup group;
+    private Long groupId;
 
     private BigDecimal factor;
 

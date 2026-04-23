@@ -20,7 +20,7 @@ public class CreateProductHandler {
     private final ProductRepository productRepository;
     private final ProductTemplateRepository templateRepository;
     private final UomRepository uomRepository;
-
+    private final ProductMapper productMapper;
 
     @Transactional
     public ProductDTO create(CreateProductCommand cmd) {
@@ -31,10 +31,10 @@ public class CreateProductHandler {
         Uom uom =
                 uomRepository.getReferenceById(cmd.uomId());
 
-        Product product = ProductMapper.toEntity(cmd, template, uom);
+        Product product = productMapper.toEntity(cmd);
 
         product = productRepository.save(product);
 
-        return ProductMapper.toDto(product);
+        return productMapper.toDto(product);
     }
 }

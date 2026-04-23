@@ -4,7 +4,6 @@ public record UpdateProductCommand(
 
         String sku,
         String barcode,
-        Long templateId,
-        Long uomId
+        Long templateId
 
 ) {}

@@ -2,35 +2,24 @@ package com.alf.inventory.mapper;
 
 import com.alf.inventory.dto.CreateProductCommand;
 import com.alf.inventory.dto.ProductDTO;
+import com.alf.inventory.dto.ProductVariantRequest;
 import com.alf.inventory.entity.Product;
-import com.alf.inventory.entity.ProductTemplate;
-import com.alf.inventory.entity.Uom;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductMapper {
 
-    public static ProductDTO toDto(Product p){
-
-        return new ProductDTO(
-                p.getId(),
-                p.getTemplate().getName(),
-                p.getSku(),
-                p.getTemplate().getId(),
-                p.getActive()
-        );
-
-    }
-
-    public static Product toEntity(CreateProductCommand cmd,
-                                   ProductTemplate template,
-                                   Uom uom) {
-
+    public Product toEntity(CreateProductCommand request){
         Product product = new Product();
-
-        product.setSku(cmd.sku());
-        product.setBarcode(cmd.barcode());
-        product.setTemplate(template);
-        product.setUom(uom);
-
+        product.setTemplateId(request.templateId());
+        product.setSku(request.sku());
+        product.setBarcode(request.barcode());
+        product.setActive(request.active());
         return product;
     }
+
+    public ProductDTO toDto(Product product){
+        return new ProductDTO(product.getId(),product.getSku(),product.getTemplateId(),product.getActive());
+    }
 }
+
