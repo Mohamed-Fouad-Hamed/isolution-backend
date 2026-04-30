@@ -22,7 +22,7 @@
         <include file="changelog/stock_quant_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/stock_move_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/stock_picking_entity.xml" relativeToChangelogFile="true" />
-        <include file="changelog/stock_picking_move_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/stock_picking_line_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/stock_reorder_rule_entity.xml" relativeToChangelogFile="true" />
 
     <!-- TODO: add new change sets here! -->

@@ -18,20 +18,71 @@
 
         <sql>
 
-            CREATE TABLE stock_picking (
+            CREATE TABLE picking (
+            id BIGSERIAL PRIMARY KEY,
 
-                id BIGSERIAL PRIMARY KEY,
+            code VARCHAR(50) NOT NULL UNIQUE,
 
-                picking_type VARCHAR(20),
+            warehouse_id BIGINT NOT NULL,
 
-                source_location_id BIGINT,
+            company_id BIGINT NOT NULL,
 
-                destination_location_id BIGINT,
+            operation_type VARCHAR(30) NOT NULL,
+            -- OUTGOING / INTERNAL / INCOMING
 
-                reference VARCHAR(100),
+            state VARCHAR(30) NOT NULL DEFAULT 'DRAFT',
+            -- DRAFT / READY / IN_PROGRESS / DONE / CANCELLED
 
-                state VARCHAR(20) DEFAULT 'draft'
+            assigned_to BIGINT,
+
+            priority INTEGER DEFAULT 5,
+
+            scheduled_at TIMESTAMP,
+            started_at TIMESTAMP,
+            completed_at TIMESTAMP,
+
+            reference VARCHAR(100),
+
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP,
+
+            CONSTRAINT chk_picking_state CHECK (
+            state IN (
+            'DRAFT',
+            'READY',
+            'IN_PROGRESS',
+            'DONE',
+            'CANCELLED'
+            )
+            ),
+
+            CONSTRAINT chk_operation_type CHECK (
+            operation_type IN (
+            'OUTGOING',
+            'INTERNAL',
+            'INCOMING'
+            )
+            )
             );
+
+
+            CREATE INDEX idx_picking_state
+            ON picking(state);
+
+            CREATE INDEX idx_picking_assigned
+            ON picking(assigned_to);
+
+            CREATE INDEX idx_picking_warehouse
+            ON picking(warehouse_id);
+
+            CREATE INDEX idx_picking_company
+            ON picking(company_id);
+
+            CREATE INDEX idx_picking_priority
+            ON picking(priority);
+
+            CREATE INDEX idx_picking_reference
+            ON picking(reference);
 
 
 
