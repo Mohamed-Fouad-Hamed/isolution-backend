@@ -26,7 +26,11 @@
 
                 name VARCHAR(255) NOT NULL,
 
-                company_id BIGINT
+                company_id BIGINT,
+
+                allocation_method VARCHAR(30),
+
+                allow_partial_reservation boolean ,
             );
 
         </sql>

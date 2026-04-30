@@ -5,11 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "stock_quant",
         uniqueConstraints = @UniqueConstraint(
-                columnNames = {"product_id", "location_id", "lot_id"}
+                columnNames = {"product_id", "location_id", "lot_id","company_id"}
         ),
         indexes = {
                 @Index(name = "idx_quant_product", columnList = "product_id"),
@@ -38,6 +39,18 @@ public class StockQuant {
 
     @Column(name="lot_id")
     private Long lotId;
+
+    @Column(name = "is_date")
+    private LocalDateTime isDate;
+
+    @Column(name = "expiry_date")
+    private LocalDateTime expiryDate;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
 
     @Column(nullable = false)

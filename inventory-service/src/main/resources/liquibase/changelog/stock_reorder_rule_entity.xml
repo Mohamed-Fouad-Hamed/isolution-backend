@@ -20,24 +20,24 @@
 
             CREATE TABLE stock_reorder_rule (
 
-            id BIGSERIAL PRIMARY KEY,
+                id BIGSERIAL PRIMARY KEY,
 
-            product_id BIGINT NOT NULL,
+                product_id BIGINT NOT NULL,
 
-            location_id BIGINT NOT NULL,
+                location_id BIGINT NOT NULL,
 
-            min_qty NUMERIC(18,4),
-            max_qty NUMERIC(18,4),
+                min_qty NUMERIC(18,4),
+                max_qty NUMERIC(18,4),
 
-            order_qty NUMERIC(18,4),
+                order_qty NUMERIC(18,4),
 
-            CONSTRAINT fk_rule_product
-            FOREIGN KEY (product_id)
-            REFERENCES product(id),
+                CONSTRAINT fk_rule_product
+                FOREIGN KEY (product_id)
+                REFERENCES product(id),
 
-            CONSTRAINT fk_rule_location
-            FOREIGN KEY (location_id)
-            REFERENCES stock_location(id)
+                CONSTRAINT fk_rule_location
+                FOREIGN KEY (location_id)
+                REFERENCES stock_location(id)
             );
 
 

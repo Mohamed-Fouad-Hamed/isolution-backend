@@ -20,21 +20,21 @@
 
             CREATE TABLE product (
 
-            id BIGSERIAL PRIMARY KEY,
+                id BIGSERIAL PRIMARY KEY,
 
-            template_id BIGINT NOT NULL,
+                template_id BIGINT NOT NULL,
 
-            tracking varchar(50) NOT NULL ,
+                tracking varchar(50) NOT NULL ,
 
-            sku VARCHAR(100) UNIQUE,
+                sku VARCHAR(100) UNIQUE,
 
-            barcode VARCHAR(100),
+                barcode VARCHAR(100),
 
-            active BOOLEAN DEFAULT TRUE,
+                active BOOLEAN DEFAULT TRUE,
 
-            CONSTRAINT fk_product_template
-            FOREIGN KEY (template_id)
-            REFERENCES product_template(id)
+                CONSTRAINT fk_product_template
+                FOREIGN KEY (template_id)
+                REFERENCES product_template(id)
             );
 
 

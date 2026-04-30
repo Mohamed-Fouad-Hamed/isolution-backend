@@ -20,18 +20,20 @@
 
             CREATE TABLE stock_picking (
 
-            id BIGSERIAL PRIMARY KEY,
+                id BIGSERIAL PRIMARY KEY,
 
-            picking_type VARCHAR(20),
+                picking_type VARCHAR(20),
 
-            source_location_id BIGINT,
+                source_location_id BIGINT,
 
-            destination_location_id BIGINT,
+                destination_location_id BIGINT,
 
-            reference VARCHAR(100),
+                reference VARCHAR(100),
 
-            state VARCHAR(20) DEFAULT 'draft'
+                state VARCHAR(20) DEFAULT 'draft'
             );
+
+
 
         </sql>
 

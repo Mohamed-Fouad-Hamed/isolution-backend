@@ -20,16 +20,20 @@
 
             CREATE TABLE stock_picking_move (
 
-            picking_id BIGINT,
-            move_id BIGINT,
+                picking_id BIGINT,
 
-            PRIMARY KEY (picking_id, move_id),
+                move_id BIGINT,
 
-            FOREIGN KEY (picking_id)
-            REFERENCES stock_picking(id),
+                PRIMARY KEY (picking_id, move_id),
 
-            FOREIGN KEY (move_id)
-            REFERENCES stock_move(id)
+                FOREIGN KEY (picking_id)
+
+                REFERENCES stock_picking(id),
+
+                FOREIGN KEY (move_id)
+
+                REFERENCES stock_move(id)
+
             );
 
         </sql>

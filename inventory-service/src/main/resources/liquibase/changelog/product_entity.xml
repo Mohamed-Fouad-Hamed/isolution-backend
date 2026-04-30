@@ -38,6 +38,7 @@
             sale_uom_id BIGINT,
 
             weight NUMERIC(12,3),
+
             volume NUMERIC(12,3),
 
             active BOOLEAN DEFAULT TRUE,

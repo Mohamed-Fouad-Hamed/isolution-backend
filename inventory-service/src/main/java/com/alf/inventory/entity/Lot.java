@@ -24,7 +24,9 @@ public class Lot {  // Batch or Serial Entity
     @Column(name="product_id")
     private Long productId;
 
+    @Column(name="expiry_date")
     private LocalDate expiryDate;
 
+    @Column(name="is_serial")
     private Boolean isSerial; // true = serial, false = lot
 }

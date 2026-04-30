@@ -19,14 +19,16 @@
         <sql>
 
             CREATE TABLE product_category (
-            id BIGSERIAL PRIMARY KEY,
 
-            name VARCHAR(255) NOT NULL,
-            parent_id BIGINT,
+                id BIGSERIAL PRIMARY KEY,
 
-            CONSTRAINT fk_category_parent
-            FOREIGN KEY (parent_id)
-            REFERENCES product_category(id)
+                name VARCHAR(255) NOT NULL,
+
+                parent_id BIGINT,
+
+                CONSTRAINT fk_category_parent
+                FOREIGN KEY (parent_id)
+                REFERENCES product_category(id)
             );
 
 

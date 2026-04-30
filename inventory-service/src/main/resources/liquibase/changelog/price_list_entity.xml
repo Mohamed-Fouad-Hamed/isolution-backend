@@ -18,15 +18,19 @@
         <sql>
 
             CREATE TABLE price_list (
-            id BIGSERIAL PRIMARY KEY,
 
-            code VARCHAR(50) UNIQUE,
-            name VARCHAR(255) NOT NULL,
+                id BIGSERIAL PRIMARY KEY,
 
-            currency_id BIGINT,
-            active BOOLEAN DEFAULT TRUE,
+                code VARCHAR(50) UNIQUE,
 
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                name VARCHAR(255) NOT NULL,
+
+                currency_id BIGINT,
+
+                active BOOLEAN DEFAULT TRUE,
+
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            
             );
 
         </sql>

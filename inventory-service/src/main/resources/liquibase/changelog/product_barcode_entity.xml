@@ -18,21 +18,23 @@
         <sql>
 
             CREATE TABLE product_barcode (
-            id BIGSERIAL PRIMARY KEY,
 
-            product_id BIGINT NOT NULL,
-            uom_id BIGINT,
+                id BIGSERIAL PRIMARY KEY,
 
-            barcode VARCHAR(100) UNIQUE NOT NULL,
+                product_id BIGINT NOT NULL,
 
-            CONSTRAINT fk_barcode_product
-            FOREIGN KEY (product_id)
-            REFERENCES product(id)
-            ON DELETE CASCADE,
+                uom_id BIGINT,
 
-            CONSTRAINT fk_barcode_uom
-            FOREIGN KEY (uom_id)
-            REFERENCES uom(id)
+                barcode VARCHAR(100) UNIQUE NOT NULL,
+
+                CONSTRAINT fk_barcode_product
+                FOREIGN KEY (product_id)
+                REFERENCES product(id)
+                ON DELETE CASCADE,
+
+                CONSTRAINT fk_barcode_uom
+                FOREIGN KEY (uom_id)
+                REFERENCES uom(id)
             );
 
 

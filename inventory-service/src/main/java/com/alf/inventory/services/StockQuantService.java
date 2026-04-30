@@ -9,13 +9,16 @@ import com.alf.inventory.repository.LotRepository;
 import com.alf.inventory.repository.StockQuantRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -59,14 +62,14 @@ public class StockQuantService {
             line.setProductId(q.getProductId());
             line.setSourceLocationId(q.getLocationId());
             line.setDestinationLocationId(move.getDestinationLocationId());
-            line.setQtyDone(take);
+            line.setReserveQuantity(take);
 
             lines.add(line);
 
             remaining = remaining.subtract(take);
         }
 
-        move.setState(remaining.compareTo(BigDecimal.ZERO) == 0
+        move.setMoveState(remaining.compareTo(BigDecimal.ZERO) == 0
                 ? MoveState.ASSIGNED
                 : MoveState.CONFIRMED // partial
         );
@@ -89,6 +92,44 @@ public class StockQuantService {
         stockQuantRepository.save(quant);
 
         // optional: create audit move
+    }
+
+    @Transactional
+    public StockQuant findOrCreateForUpdate(
+            Long productId,
+            Long locationId,
+            Long lotId,
+            Long companyId) {
+
+        // Try find with lock
+        Optional<StockQuant> existing =
+                stockQuantRepository.findForUpdate(productId, locationId, lotId, companyId);
+
+        if (existing.isPresent()) {
+            return existing.get();
+        }
+
+        // Create جديد
+        try {
+            StockQuant newQuant = new StockQuant();
+            newQuant.setProductId(productId);
+            newQuant.setLocationId(locationId);
+            newQuant.setLotId(lotId);
+            newQuant.setCompanyId(companyId);
+            newQuant.setQuantity(BigDecimal.ZERO);
+            newQuant.setReservedQuantity(BigDecimal.ZERO);
+            newQuant.setIsDate(LocalDateTime.now());
+
+            stockQuantRepository.saveAndFlush(newQuant);
+
+            return newQuant;
+
+        } catch (DataIntegrityViolationException ex) {
+            // 🔥 3. حد سبقك وخلق نفس quant (unique constraint)
+
+            return stockQuantRepository.findForUpdate(productId, locationId, lotId, companyId)
+                    .orElseThrow(() -> new IllegalStateException("Quant creation race condition"));
+        }
     }
 
 

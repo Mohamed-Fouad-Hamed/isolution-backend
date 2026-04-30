@@ -18,16 +18,23 @@
 
         <sql>
             CREATE TABLE uom (
+
                 id BIGSERIAL PRIMARY KEY,
+
                 code VARCHAR(50) UNIQUE NOT NULL,
+
                 name VARCHAR(255) NOT NULL,
+
                 company_id BIGINT,
+
                 group_id BIGINT NOT NULL,
 
                 factor NUMERIC(18,6) NOT NULL,
+
                 rounding NUMERIC(18,6) DEFAULT 0.01,
 
                 is_reference BOOLEAN DEFAULT FALSE,
+
                 active BOOLEAN DEFAULT TRUE,
 
                 CONSTRAINT fk_uom_group

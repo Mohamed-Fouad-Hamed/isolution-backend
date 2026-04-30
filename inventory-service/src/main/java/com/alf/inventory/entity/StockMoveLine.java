@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "stock_move_line")
@@ -19,6 +20,9 @@ public class StockMoveLine {
     @Column(name="move_id")
     private Long moveId;
 
+    @Column(name="company_id")
+    private Long  companyId;
+
     @Column(name="product_id")
     private Long productId;
 
@@ -31,6 +35,14 @@ public class StockMoveLine {
     @Column(name="lot_id")
     private Long lotId;
 
-    private BigDecimal qtyDone;
+    @Column(name="reserve_quantity")
+    private BigDecimal reserveQuantity;
+
+    @Column(name="quantity_done")
+    private BigDecimal quantityDone;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
 }
 

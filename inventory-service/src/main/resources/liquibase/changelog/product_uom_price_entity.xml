@@ -19,22 +19,25 @@
         <sql>
 
             CREATE TABLE product_uom_price (
-            id BIGSERIAL PRIMARY KEY,
 
-            product_id BIGINT NOT NULL,
-            uom_id BIGINT NOT NULL,
+                id BIGSERIAL PRIMARY KEY,
 
-            price NUMERIC(18,4) NOT NULL,
-            currency_id BIGINT,
+                product_id BIGINT NOT NULL,
 
-            CONSTRAINT fk_price_product
-            FOREIGN KEY (product_id)
-            REFERENCES product(id)
-            ON DELETE CASCADE,
+                uom_id BIGINT NOT NULL,
 
-            CONSTRAINT fk_price_uom
-            FOREIGN KEY (uom_id)
-            REFERENCES uom(id)
+                price NUMERIC(18,4) NOT NULL,
+
+                currency_id BIGINT,
+
+                CONSTRAINT fk_price_product
+                FOREIGN KEY (product_id)
+                REFERENCES product(id)
+                ON DELETE CASCADE,
+
+                CONSTRAINT fk_price_uom
+                FOREIGN KEY (uom_id)
+                REFERENCES uom(id)
             );
 
 

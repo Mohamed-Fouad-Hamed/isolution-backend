@@ -27,22 +27,45 @@
 
             lot_id BIGINT,
 
-            quantity NUMERIC(18,4) NOT NULL,
+            company_id BIGINT NOT NULL,
 
-            reserved_quantity NUMERIC(18,4) DEFAULT 0,
+            quantity NUMERIC(16,6) NOT NULL DEFAULT 0,
 
-            CONSTRAINT fk_quant_product
-            FOREIGN KEY (product_id)
-            REFERENCES product(id),
+            reserved_quantity NUMERIC(16,6) NOT NULL DEFAULT 0,
 
-            CONSTRAINT fk_quant_location
-            FOREIGN KEY (location_id)
-            REFERENCES stock_location(id),
+            in_date TIMESTAMP, -- FIFO
 
-            CONSTRAINT fk_quant_lot
-            FOREIGN KEY (lot_id)
-            REFERENCES stock_lot(id)
+            expiry_date TIMESTAMP, -- FEFO
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP,
+
+            CONSTRAINT uq_quant UNIQUE (product_id, location_id, lot_id, company_id),
+
+            CONSTRAINT chk_quantity_positive CHECK (quantity >= 0),
+            CONSTRAINT chk_reserved_positive CHECK (reserved_quantity >= 0)
             );
+
+            CREATE INDEX idx_quant_lookup
+            ON stock_quant(product_id, location_id, company_id);
+
+            CREATE INDEX idx_quant_product
+            ON stock_quant(product_id);
+
+            CREATE INDEX idx_quant_location
+            ON stock_quant(location_id);
+
+            CREATE INDEX idx_quant_company
+            ON stock_quant(company_id);
+
+            CREATE INDEX idx_quant_in_date
+            ON stock_quant(in_date);
+
+            CREATE INDEX idx_quant_lot
+            ON stock_quant(lot_id);
+
+            CREATE INDEX idx_quant_available
+            ON stock_quant(product_id, location_id)
+            WHERE quantity > reserved_quantity;
 
         </sql>
 

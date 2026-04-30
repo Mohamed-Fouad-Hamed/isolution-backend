@@ -32,7 +32,6 @@ public class ProductTemplate {
     @Column(name = "category_id")
     private Long categoryId;
 
-
     @Column(name = "uom_id")
     private Long uomId;
 

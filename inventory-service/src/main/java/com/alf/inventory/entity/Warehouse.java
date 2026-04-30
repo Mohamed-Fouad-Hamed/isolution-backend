@@ -1,5 +1,7 @@
 package com.alf.inventory.entity;
 
+import com.alf.inventory.enums.AllocationMethod;
+import com.alf.inventory.enums.MoveType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,18 +25,12 @@ public class Warehouse {
     @Column(name="company_id")
     private Long companyId;
 
-    // Default locations
-    @OneToOne
-    private Location inputLocation;
+    @Enumerated(EnumType.STRING)
+    @Column(name="allocation_method")
+    private AllocationMethod allocationMethod;
 
-    @OneToOne
-    private Location stockLocation;
-
-    @OneToOne
-    private Location outputLocation;
-
-    @OneToMany(mappedBy = "warehouse")
-    private List<Location> locations;
+    @Column(name="allow_partial_reservation")
+    private Boolean allowPartialReservation;
 
 }
 
