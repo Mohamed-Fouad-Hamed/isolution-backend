@@ -1,6 +1,8 @@
 package com.alf.inventory.repository;
 
+import com.alf.inventory.dto.ProductWithMainImageDTO;
 import com.alf.inventory.entity.Product;
+import com.alf.inventory.enums.ResourceType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -72,6 +74,25 @@ public interface ProductRepository
     )
     """)
     Page<ProductVariantResponse> search(@Param("search") String search, Pageable pageable);
+
+
+    @Query("""
+    SELECT new com.alf.inventory.dto.ProductWithMainImageDTO(
+        p.id,
+        p.sku,
+        r.id,
+        r.url
+    )
+    FROM Product p
+    LEFT JOIN ProductResourceMapping prm ON prm.product = p
+                                        AND prm.resourceType = :resourceType
+    LEFT JOIN prm.resource r 
+    WHERE p.id = :id
+""")
+    Optional<ProductWithMainImageDTO> findProductWithMainImage(
+            @Param("id") Long id,
+            @Param("resourceType") ResourceType resourceType
+    );
 
 }
 

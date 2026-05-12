@@ -66,26 +66,6 @@
             );
 
 
-            CREATE INDEX idx_picking_state
-            ON picking(state);
-
-            CREATE INDEX idx_picking_assigned
-            ON picking(assigned_to);
-
-            CREATE INDEX idx_picking_warehouse
-            ON picking(warehouse_id);
-
-            CREATE INDEX idx_picking_company
-            ON picking(company_id);
-
-            CREATE INDEX idx_picking_priority
-            ON picking(priority);
-
-            CREATE INDEX idx_picking_reference
-            ON picking(reference);
-
-
-
         </sql>
 
     </changeSet>

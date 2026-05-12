@@ -55,6 +55,21 @@ public interface StockQuantRepository
     @Query("""
         SELECT q FROM StockQuant q
         WHERE q.productId = :productId
+        AND q.locationId = :locationId
+        AND q.companyId = :companyId
+        AND (q.lotId = :lotId OR (q.lotId IS NULL AND :lotId IS NULL))
+        """)
+    Optional<StockQuant> findOneByKeys(
+            Long productId,
+            Long locationId,
+            Long lotId,
+            Long companyId
+    );
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("""
+        SELECT q FROM StockQuant q
+        WHERE q.productId = :productId
         AND q.companyId = :companyId
         AND q.locationId IN :locationIds
         AND q.quantity > q.reservedQuantity
@@ -81,7 +96,7 @@ public interface StockQuantRepository
     );
 
     @Query("""
-        SELECT q FROM StockQuant q, StockLocation l
+        SELECT q FROM StockQuant q, Location l
         WHERE q.locationId = l.id
         AND q.productId = :productId
         AND q.companyId = :companyId
@@ -112,7 +127,7 @@ public interface StockQuantRepository
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("""
         SELECT q
-        FROM StockQuant q, StockLocation l
+        FROM StockQuant q, Location l
         WHERE q.locationId = l.id
         AND q.productId = :productId
         AND q.companyId = :companyId
@@ -128,10 +143,5 @@ public interface StockQuantRepository
 
 
 
-    Optional<StockQuant> findOneByKeys(
-            Long productId,
-            Long locationId,
-            Long lotId,
-            Long companyId
-    );
+
 }

@@ -4,6 +4,7 @@ package com.alf.accounts_service.services;
 import com.alf.accounts_service.dtos.account.AccountCompany;
 import com.alf.accounts_service.dtos.account.AccountDto;
 import com.alf.accounts_service.dtos.account.AccountOptionReq;
+import com.alf.accounts_service.dtos.account.AccountResponse;
 import com.alf.accounts_service.dtos.company.CompanyHierarchyDto;
 import com.alf.accounts_service.mappers.AccountMapper;
 import com.alf.accounts_service.models.*;
@@ -131,9 +132,9 @@ public class AccountService {
 
     }
 
-    public Map<String,Long> updateAccount(AccountCompany accountCompany){
+    public Map<String,AccountResponse> updateAccount(AccountCompany accountCompany){
 
-        Map<String,Long> idsMap = new HashMap<>();
+        Map<String,AccountResponse> idsMap = new HashMap<>();
 
         idsMap =  recursionSaveAccount(accountCompany , null , idsMap);
 
@@ -141,17 +142,17 @@ public class AccountService {
     }
 
 
-    private Map<String,Long> recursionSaveAccount( AccountCompany accountCompany , Account parent ,  Map<String,Long> idsMap ){
+    private Map<String, AccountResponse> recursionSaveAccount(AccountCompany accountCompany , Account parent , Map<String,AccountResponse> idsMap ){
 
         Account instance = saveAccountCompany(accountCompany,parent);
 
-        idsMap.put( accountCompany.tempId() , instance.getId() );
+        idsMap.put( accountCompany.tempId() , new AccountResponse( instance.getId() , instance.getSerialId()) );
 
         Arrays.stream(accountCompany.branches()).forEach((acc)-> {
 
             Account child = saveAccountCompany(acc,instance);
 
-            idsMap.put( acc.tempId() , child.getId() );
+            idsMap.put( acc.tempId() , new AccountResponse( child.getId()  , child.getSerialId()));
 
             Arrays.stream(acc.branches()).forEach((branch)->recursionSaveAccount(branch , child , idsMap));
 
@@ -166,7 +167,7 @@ public class AccountService {
         Account parent = parentAccount ;
         AccountDto accountDto = null;
 
-        if(accountCompany.serialId() == null || accountCompany.serialId() == "") {
+        if(accountCompany.serialId() == null || accountCompany.serialId().isEmpty()) {
             account = new Account();
             String serial = idGeneratorService.generateNextId("app_accounts");
             account.setSerialId(serial);
@@ -205,6 +206,7 @@ public class AccountService {
             String serial = idGeneratorService.generateNextId("partner");
             partner.setSerialId(serial);
         }
+
         partner.setName(accountCompany.accountName());
         partner.setDisplayName(accountCompany.accountName());
         partner.setIsCompany(true);

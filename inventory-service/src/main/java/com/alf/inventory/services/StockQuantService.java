@@ -118,7 +118,7 @@ public class StockQuantService {
             newQuant.setCompanyId(companyId);
             newQuant.setQuantity(BigDecimal.ZERO);
             newQuant.setReservedQuantity(BigDecimal.ZERO);
-            newQuant.setIsDate(LocalDateTime.now());
+            newQuant.setInDate(LocalDateTime.now());
 
             stockQuantRepository.saveAndFlush(newQuant);
 

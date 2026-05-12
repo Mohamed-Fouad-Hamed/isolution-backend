@@ -4,7 +4,7 @@ import com.alf.inventory.enums.LocationType;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "location",
+@Table(name = "stock_location",
         indexes = {
                 @Index(name = "idx_location_company", columnList = "company_id"),
                 @Index(name = "idx_location_usage", columnList = "location_type")

@@ -3,6 +3,7 @@ package com.alf.accounts_service.controllers;
 
 import com.alf.accounts_service.dtos.account.AccountCompany;
 import com.alf.accounts_service.dtos.account.AccountDto;
+import com.alf.accounts_service.dtos.account.AccountResponse;
 import com.alf.accounts_service.services.AccountService;
 import com.alf.core_common.dtos.payload.MessageResponse;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +56,7 @@ public class AccountController {
 
         String message = "ok";
 
-        Map<String,Long> result = new HashMap<>();
+        Map<String, AccountResponse> result = new HashMap<>();
 
         if(Objects.equals(accountCompany.accountName(), "") || accountCompany.accountName() == null)
             return  ResponseEntity.ok(

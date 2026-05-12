@@ -90,6 +90,17 @@ spring:
                 redis-rate-limiter.replenishRate: 100
                 redis-rate-limiter.burstCapacity: 200
                 key-resolver: "#{@userKeyResolver}"
+        - id: media-service
+          uri: http://host.docker.internal:8077
+          predicates:
+            - Path=/api/v1/media/**
+          filters:
+            - StripPrefix=3
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 100
+                redis-rate-limiter.burstCapacity: 200
+                key-resolver: "#{@userKeyResolver}"
 
   redis:
     host: ${REDIS_HOST:redis}

@@ -45,27 +45,7 @@
             CONSTRAINT chk_reserved_positive CHECK (reserved_quantity >= 0)
             );
 
-            CREATE INDEX idx_quant_lookup
-            ON stock_quant(product_id, location_id, company_id);
 
-            CREATE INDEX idx_quant_product
-            ON stock_quant(product_id);
-
-            CREATE INDEX idx_quant_location
-            ON stock_quant(location_id);
-
-            CREATE INDEX idx_quant_company
-            ON stock_quant(company_id);
-
-            CREATE INDEX idx_quant_in_date
-            ON stock_quant(in_date);
-
-            CREATE INDEX idx_quant_lot
-            ON stock_quant(lot_id);
-
-            CREATE INDEX idx_quant_available
-            ON stock_quant(product_id, location_id)
-            WHERE quantity > reserved_quantity;
 
         </sql>
 

@@ -70,7 +70,7 @@ services:
     image: postgres:16
     container_name: postgres-auth
     environment:
-      POSTGRES_DB: authdb
+      POSTGRES_DB: auth_db
       POSTGRES_USER: auth_user
       POSTGRES_PASSWORD: auth_pass
     volumes:
@@ -78,7 +78,7 @@ services:
     ports:
       - "5433:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U auth_user -d authdb"]
+      test: ["CMD-SHELL", "pg_isready -U auth_user -d auth_db"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -89,7 +89,7 @@ services:
     image: postgres:16
     container_name: postgres-billing
     environment:
-      POSTGRES_DB: billingdb
+      POSTGRES_DB: billing_db
       POSTGRES_USER: billing_user
       POSTGRES_PASSWORD: billing_pass
     volumes:
@@ -97,7 +97,7 @@ services:
     ports:
       - "5434:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U billing_user -d billingdb"]
+      test: ["CMD-SHELL", "pg_isready -U billing_user -d billing_db"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -142,6 +142,24 @@ services:
     networks:
       - isolution-net
 
+  postgres-media:
+    image: postgres:16
+    container_name: postgres-media
+    environment:
+      POSTGRES_DB: media_db
+      POSTGRES_USER: media_user
+      POSTGRES_PASSWORD: media_pass
+    volumes:
+      - postgres_media_data:/var/lib/postgresql/data
+    ports:
+      - "5437:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U media_user -d media_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - isolution-net
   # =============================
   # 🦜 Kafka + Zookeeper
   # =============================
@@ -360,3 +378,4 @@ volumes:
   postgres_billing_data:
   postgres_accounts_data:
   postgres_inventory_data:
+  postgres_media_data:

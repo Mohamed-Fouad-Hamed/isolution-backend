@@ -11,6 +11,7 @@
         <module name="config-service" />
         <module name="inventory-service" />
         <module name="gateway-service" />
+        <module name="media-service" />
         <module name="accounts-service" />
         <module name="discovery-service" />
         <module name="billing-service" />
@@ -39,6 +40,7 @@
       <module name="discovery-service" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="inventory-service" options="-parameters" />
+      <module name="media-service" options="-parameters" />
       <module name="security-common" options="-parameters" />
       <module name="security-starter" options="-parameters" />
     </option>

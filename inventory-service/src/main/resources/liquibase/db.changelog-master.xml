@@ -8,6 +8,7 @@
         <!-- Migrations -->
         <include file="changelog/uom_group_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/uom_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/product_category_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/product_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/product_variant_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/product_uom_conversion_entity.xml" relativeToChangelogFile="true" />
@@ -15,7 +16,6 @@
         <include file="changelog/product_barcode_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/price_list_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/price_list_item_entity.xml" relativeToChangelogFile="true" />
-        <include file="changelog/product_category_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/warehouse_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/stock_location_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/stock_lot_entity.xml" relativeToChangelogFile="true" />
@@ -24,6 +24,8 @@
         <include file="changelog/stock_picking_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/stock_picking_line_entity.xml" relativeToChangelogFile="true" />
         <include file="changelog/stock_reorder_rule_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/resources_entity.xml" relativeToChangelogFile="true" />
+        <include file="changelog/product_resource_mapping.xml" relativeToChangelogFile="true" />
 
     <!-- TODO: add new change sets here! -->
 

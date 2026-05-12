@@ -40,8 +40,8 @@ public class StockQuant {
     @Column(name="lot_id")
     private Long lotId;
 
-    @Column(name = "is_date")
-    private LocalDateTime isDate;
+    @Column(name = "in_date")
+    private LocalDateTime inDate;
 
     @Column(name = "expiry_date")
     private LocalDateTime expiryDate;

@@ -50,23 +50,7 @@
             REFERENCES product(id)
             );
 
-            CREATE INDEX idx_move_product
-            ON stock_move(product_id);
 
-            CREATE INDEX idx_move_company
-            ON stock_move(company_id);
-
-            CREATE INDEX idx_move_state
-            ON stock_move(move_state);
-
-            CREATE INDEX idx_move_source
-            ON stock_move(source_location_id);
-
-            CREATE INDEX idx_move_dest
-            ON stock_move(destination_location_id);
-
-            CREATE INDEX idx_move_company_state
-            ON stock_move(company_id, move_state);
 
             CREATE TABLE stock_move_line (
 

@@ -27,7 +27,7 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://postgres-billing:5432/billingdb
+    url: jdbc:postgresql://localhost:5432/billing_db
     username: billing_user
     password: billing_pass
     driverClassName: org.postgresql.Driver

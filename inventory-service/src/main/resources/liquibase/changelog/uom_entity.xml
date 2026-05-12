@@ -42,11 +42,7 @@
                 REFERENCES uom_group(id)
             );
 
-            CREATE INDEX idx_uom_group
-                ON uom (uom_group_id);
 
-            CREATE INDEX idx_uom_company
-                ON uom (company_id);
 
         </sql>
 

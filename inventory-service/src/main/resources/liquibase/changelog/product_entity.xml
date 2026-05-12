@@ -61,20 +61,6 @@
             );
 
 
-          --  CREATE INDEX idx_template_name
-          --      ON product_template USING BTREE (name);
-
-            CREATE INDEX idx_template_name_trgm
-                ON product_template USING GIN (name gin_trgm_ops);
-
-
-            CREATE INDEX idx_template_company
-                ON product_template (company_id);
-
-
-            CREATE INDEX idx_template_uom_group
-                ON product_template (uom_group_id);
-
 
         </sql>
 

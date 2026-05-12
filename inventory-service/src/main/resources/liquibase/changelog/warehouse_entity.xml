@@ -30,7 +30,7 @@
 
                 allocation_method VARCHAR(30),
 
-                allow_partial_reservation boolean ,
+                allow_partial_reservation boolean 
             );
 
         </sql>

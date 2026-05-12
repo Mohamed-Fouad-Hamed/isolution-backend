@@ -65,26 +65,10 @@
 
                 CONSTRAINT chk_reserved_qty CHECK (reserved_qty >= 0),
                 CONSTRAINT chk_picked_qty CHECK (picked_qty >= 0),
-                CONSTRAINT chk_picked_le_reserved CHECK (picked_qty <= reserved_qty)
+                CONSTRAINT chk_picked_le_reserved CHECK (reserved_qty >= picked_qty )
             );
 
-            CREATE INDEX idx_picking_line_picking
-            ON picking_line(picking_id);
 
-            CREATE INDEX idx_picking_line_move_line
-            ON picking_line(move_line_id);
-
-            CREATE INDEX idx_picking_line_product
-            ON picking_line(product_id);
-
-            CREATE INDEX idx_picking_line_state
-            ON picking_line(state);
-
-            CREATE INDEX idx_picking_line_location
-            ON picking_line(source_location_id);
-
-            CREATE UNIQUE INDEX uq_picking_line
-            ON picking_line(picking_id, move_line_id);
 
 
         </sql>
